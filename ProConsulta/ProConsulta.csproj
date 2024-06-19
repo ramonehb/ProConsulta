@@ -7,13 +7,6 @@
     <UserSecretsId>aspnet-ProConsulta-a1a20635-c681-42ff-99d9-7108d425f908</UserSecretsId>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="NovaPasta\**" />
-    <Content Remove="NovaPasta\**" />
-    <EmbeddedResource Remove="NovaPasta\**" />
-    <None Remove="NovaPasta\**" />
-  </ItemGroup>
-
   
   
   <ItemGroup>
