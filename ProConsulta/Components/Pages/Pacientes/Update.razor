@@ -1,18 +1,14 @@
-﻿@page "/Pacientes/Create";
-@inherits CreatePacientePage;
-<style>
-    .custom-datepicker {
-        width: 170px; 
-        position: relative;
-    }
-</style>
-<MudText Typo="Typo.h5">Cadastrar Paciente</MudText>
+﻿@page "/Pacientes/Update/{PacienteId:int}";
+
+@inherits UpdatePacientePage;
+
+<MudText Typo="Typo.h5">Atualizar Paciente</MudText>
 
 <MudPaper Class="pa-8 mt-4">
     <EditForm Model="@PacienteInputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator />
 
-        <MudTextField Label="Nome*" 
+        <MudTextField Label="Nome*"
                       @bind-Value="PacienteInputModel.Nome"
                       For="@(() => PacienteInputModel.Nome)"
                       Variant="Variant.Outlined"/>
@@ -21,14 +17,14 @@
                       @bind-Value="PacienteInputModel.Documento"
                       For="@(() => PacienteInputModel.Documento)"
                       Mask="@(new PatternMask("000.000.000-00"))"
-                      Variant="Variant.Outlined"/>
+                      Variant="Variant.Outlined" />
 
         <MudTextField Label="Email*"
                       @bind-Value="PacienteInputModel.Email"
                       For="@(() => PacienteInputModel.Email)"
                       Variant="Variant.Outlined" />
 
-         <MudTextField Label="Celular*"
+        <MudTextField Label="Celular*"
                       @bind-Value="PacienteInputModel.Celular"
                       For="@(() => PacienteInputModel.Celular)"
                       Mask="@(new PatternMask("(00) 0 0000-0000"))"
@@ -38,32 +34,16 @@
                        Editable="false"
                        @bind-Date="DataNascimento"
                        Placeholder="Data de Nascimento"
-                       Variant="Variant.Outlined" /> 
-        @* <MudGrid>
-            <MudItem xs="6">
-                <MudTextField Label="Celular*"
-                              @bind-Value="PacienteInputModel.Celular"
-                              For="@(() => PacienteInputModel.Celular)"
-                              Mask="@(new PatternMask("(00) 0 0000-0000"))"
-                              Variant="Variant.Outlined" />
-            </MudItem>
-            <MudItem xs="6">
-                <MudDatePicker Label="Data de Nascimento*"
-                               Editable="false"
-                               @bind-Date="DataNascimento"
-                               Placeholder="Data de Nascimento"
-                               Variant="Variant.Outlined"/>
-            </MudItem>
-        </MudGrid> *@
+                       Variant="Variant.Outlined" />
 
-        <MudDivider Class="m-4"/>
+        <MudDivider Class="m-4" />
 
         <MudButton Variant="Variant.Filled" 
                    StartIcon="@Icons.Material.Filled.Save"
                    Color="Color.Info"
                    Size="Size.Large"
                    ButtonType="ButtonType.Submit">
-                   Salvar
+            Atualizar
         </MudButton>
         <MudButton Variant="Variant.Filled" 
                    StartIcon="@Icons.Material.Filled.BackHand"
@@ -75,5 +55,3 @@
         </MudButton>
     </EditForm>
 </MudPaper>
-
-
