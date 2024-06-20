@@ -3,21 +3,24 @@
 
 <MudText Typo="Typo.h3">Pacientes</MudText>
 
-<MudFab Color="Color.Info" 
-        StartIcon="@Icons.Material.Filled.Add" 
-        Label="Novo paciente" />
+<MudFab Color="Color.Info"
+        StartIcon="@Icons.Material.Filled.Add"
+        Label="NOVO PACIENTE"
+        Href="Pacientes/Create"
+        Style="margin-top: 30px;"/>
 
 
-<MudDataGrid Items="@pacientes"
+<MudDataGrid Items="@Pacientes"
              Filterable="false" 
              SortMode="@SortMode.Single" 
-             Groupable="false">
+             Groupable="false"
+             Style="margin-top: 10px;">
              <Columns>
                 <PropertyColumn Property="p => p.Nome"/>
                 <PropertyColumn Property="p => p.Documento" />
                 <PropertyColumn Property="p => p.Email"/>
                 <PropertyColumn Property="p => p.Celular"/>
-                <PropertyColumn Property="p => p.DataNasicmento" Format="dd/MM/yyyy"/>
+                <PropertyColumn Property="p => p.DataNasicmento" Title="Data de Nascimento" Format="dd/MM/yyyy"/>
                 <TemplateColumn>
                     <CellTemplate>
                         <MudStack Row>

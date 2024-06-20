@@ -51,7 +51,7 @@ namespace ProConsulta.Migrations
                     Documento = table.Column<string>(type: "NVarchar(11)", nullable: false),
                     Email = table.Column<string>(type: "Varchar(50)", nullable: false),
                     Celular = table.Column<string>(type: "NVarchar(11)", nullable: false),
-                    DataNasicmento = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    DataNasicmento = table.Column<DateTime>(type: "datetime2", nullable: false),
                 },
                 constraints: table =>
                 {

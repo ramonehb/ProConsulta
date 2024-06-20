@@ -7,7 +7,7 @@ public class Paciente
     public string Documento { get; set; } = null!;
     public string Email { get; set; } = null!;
     public string Celular { get; set; } = null!;
-    public string DataNasicmento { get; set; } 
+    public DateTime DataNasicmento { get; set; } 
     public ICollection<Agendamento> Agendamentos { get; set; } = new List<Agendamento>();
 
 }

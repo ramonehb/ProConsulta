@@ -8,45 +8,47 @@ namespace ProConsulta.Components.Pages.Pacientes;
 public class IndexPage : ComponentBase
 {
     [Inject]
-    public IPacienteRepository repository { get; set; } = null!;
+    public IPacienteRepository Repository { get; set; } = null!;
 
     [Inject]
-    public IDialogService dialog { get; set; } = null!;
+    public IDialogService Dialog { get; set; } = null!;
 
     [Inject]
-    public ISnackbar snackbar { get; set; } = null!;
+    public ISnackbar Snackbar { get; set; } = null!;
 
     [Inject]
-    public NavigationManager navigation { get; set; } = null!;
+    public NavigationManager Navigation { get; set; } = null!;
 
-    public List<Paciente> pacientes { get; set; }
+    public List<Paciente> Pacientes { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        pacientes = await repository.GetAllAsync();
+        Pacientes = await Repository.GetAllAsync();
     }
 
     public void GoPacienteUpdate(int idPaciente)
     {
-        navigation.NavigateTo($"/pacientes/update/{idPaciente}");
+        Navigation.NavigateTo($"/Pacientes/Update/{idPaciente}");
     }
 
     public async Task DeletePaciente(Paciente paciente)
     {
         try
         {
-            var resultado = await dialog.ShowMessageBox("Atenção", $"Deseja excluir o paciente {paciente.Nome}?", yesText: "SIM", cancelText: "NÃO") ?? false;
+            var resultado = await Dialog.ShowMessageBox("Atenção", $"Deseja excluir o paciente {paciente.Nome}?", yesText: "SIM", cancelText: "NÃO") ?? false;
 
             if (resultado)
             {
-                await repository.DeleteAsync(paciente.Id);
+                await Repository.DeleteAsync(paciente.Id);
 
-                snackbar.Add($"Paciente excluído com sucesso.", Severity.Success);
+                Snackbar.Add($"Paciente excluído com sucesso.", Severity.Success);
+                await OnInitializedAsync();
+
             }
         }
         catch (Exception ex)
         {
-            snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
+            Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
         }
     }
 }
