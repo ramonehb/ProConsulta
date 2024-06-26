@@ -2,56 +2,96 @@
 using ProConsulta.Data;
 using ProConsulta.Models;
 
-namespace ProConsulta.Repositories.Pacientes
+namespace ProConsulta.Repositories.Pacientes;
+
+public class PacienteRepository : IPacienteRepository
 {
-    public class PacienteRepository : IPacienteRepository
+    private readonly ApplicationDbContext _context;
+    public PacienteRepository(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
-        public PacienteRepository(ApplicationDbContext context)
+        _context = context;
+    }
+
+    public async Task AddAsync(Paciente paciente)
+    {
+        try
         {
-            _context = context;
-        }
+			_context.Pacientes
+				.Add(paciente);
 
-        public async Task AddAsync(Paciente paciente)
+			await _context.SaveChangesAsync();
+		}
+        catch (Exception)
         {
-            _context.Pacientes
-                .Add(paciente);
-
-            await _context.SaveChangesAsync();
+            _context.ChangeTracker.Clear();
+            throw;
         }
+    }
 
-        public async Task DeleteAsync(int id)
-        {
-            var paciente = await GetByIdAsync(id);
+    public async Task DeleteAsync(int id)
+    {
+		try
+		{
+			var paciente = await GetByIdAsync(id);
 
-            _context.Pacientes
-                .Remove(paciente);
+			_context.Pacientes
+				.Remove(paciente);
 
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task<List<Paciente>> GetAllAsync()
-        {
-            var pacientes = await _context.Pacientes
-                .AsNoTracking()
-                .ToListAsync();
+    public async Task<List<Paciente>> GetAllAsync()
+    {
+		try
+		{
+			var pacientes = await _context.Pacientes
+				.AsNoTracking()
+				.ToListAsync();
 
-            return pacientes;
-        }
+			return pacientes;
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task<Paciente?> GetByIdAsync(int id)
-        {
-            var paciente = await _context.Pacientes
-                .SingleOrDefaultAsync(p => p.Id == id);
+    public async Task<Paciente?> GetByIdAsync(int id)
+    {
+		try
+		{
+			var paciente = await _context.Pacientes
+				.SingleOrDefaultAsync(p => p.Id == id);
 
-            return  paciente;
-        }
+			return paciente;
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task UpdateAsync(Paciente paciente)
-        {
-            _context.Pacientes.Update(paciente);
+    public async Task UpdateAsync(Paciente paciente)
+    {
+		try
+		{
+			_context.Pacientes
+				.Update(paciente);
 
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
     }
 }

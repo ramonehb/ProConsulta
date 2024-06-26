@@ -2,51 +2,83 @@
 using ProConsulta.Data;
 using ProConsulta.Models;
 
-namespace ProConsulta.Repositories.Agendamentos
+namespace ProConsulta.Repositories.Agendamentos;
+
+public class AgendamentoRepository : IAgendamentoRepository
 {
-    public class AgendamentoRepository : IAgendamentoRepository
+    private readonly ApplicationDbContext _context;
+    public AgendamentoRepository(ApplicationDbContext context)
     {
-        private readonly ApplicationDbContext _context;
-        public AgendamentoRepository(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+        _context = context;
+    }
 
-        public async Task AddAsync(Agendamento agendamento)
-        {
-            _context.Agendamentos
-                .Add(agendamento);
+    public async Task AddAsync(Agendamento agendamento)
+    {
+		try
+		{
+			_context.Agendamentos
+				.Add(agendamento);
 
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task DeleteAsync(int id)
-        {
-            var agendamento = await GetByIdAsync(id);
+    public async Task DeleteAsync(int id)
+    {
+		try
+		{
+			var agendamento = await GetByIdAsync(id);
 
-            _context.Agendamentos
-                .Remove(agendamento);
+			_context.Agendamentos
+				.Remove(agendamento);
 
-            await _context.SaveChangesAsync();
-        }
+			await _context.SaveChangesAsync();
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task<List<Agendamento>> GetAllAsync()
-        {
-            var agendamentos = await _context.Agendamentos
-                .Include(p => p.Paciente)
-                .Include(p => p.Medico)
-                .AsNoTracking()
-                .ToListAsync();
+    public async Task<List<Agendamento>> GetAllAsync()
+    {
+		try
+		{
+			var agendamentos = await _context.Agendamentos
+				.Include(p => p.Paciente)
+				.Include(p => p.Medico)
+				.AsNoTracking()
+				.ToListAsync();
 
-            return agendamentos;
-        }
+			return agendamentos;
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
+    }
 
-        public async Task<Agendamento?> GetByIdAsync(int id)
-        {
-            var agendamento = await _context.Agendamentos
-                .SingleOrDefaultAsync(p => p.Id == id);
+    public async Task<Agendamento?> GetByIdAsync(int id)
+    {
+		try
+		{
+			var agendamento = await _context.Agendamentos
+				.SingleOrDefaultAsync(p => p.Id == id);
 
-            return agendamento;
-        }
+			return agendamento;
+		}
+		catch (Exception)
+		{
+			_context.ChangeTracker.Clear();
+			throw;
+		}
     }
 }
+
