@@ -1,7 +1,7 @@
 ﻿@page "/Pacientes";
 @inherits IndexPage;
 
-<style>
+@* <style>
     .custom-header {
         background-color: #88beff ;
         cursor: pointer; 
@@ -9,7 +9,7 @@
     .custom-header:hover {
         background-color: #e4e9ff;
     }
-</style>
+</style> *@
 
 <MudText Typo="Typo.h5">Pacientes</MudText>
 
@@ -26,17 +26,17 @@
              Groupable="false"
              Style="margin-top: 10px;"
              Hover="true"
-             Bordered="true"
-             HeaderClass="custom-header">
-             @* <ToolBarContent>
-                <MudTextField @bind-Value=""
+             Bordered="true">
+             <ToolBarContent>
+                          @* @bind-Value="" *@
+                <MudTextField 
                               Placeholder="Search" 
                               Adornment="Adornment.Start" 
                               Immediate="true"
                               AdornmentIcon="@Icons.Material.Filled.Search" 
                               IconSize="Size.Medium" 
                               Class="mt-0"/>
-             </ToolBarContent> *@
+             </ToolBarContent>
              <Columns>
                 <PropertyColumn Property="p => p.Nome"/>
                 <PropertyColumn Property="p => p.Documento" />

@@ -4,13 +4,13 @@ namespace ProConsulta.Extensions;
 
 public static class StringExtensions
 {
-    public static string SomenteCarecteres(this string inpunt)
+    public static string SomenteCarecteres(this string input)
     {
-        if (string.IsNullOrWhiteSpace(inpunt)) return inpunt;
+        if (string.IsNullOrWhiteSpace(input)) return input;
 
-        string padrao = @"[-\.\(\)\s]";
+        var expressaoRegular = @"[-\.\(\)\s]";
 
-        string resultado = Regex.Replace(inpunt, padrao, string.Empty);
+        var resultado = Regex.Replace(input, expressaoRegular, string.Empty);
 
         return resultado;
     }
