@@ -21,9 +21,15 @@ public class IndexPage : ComponentBase
 
     public List<Medico> Medicos { get; set; }
 
+    public List<Medico> Filtrados { get; set; }
+    
+    public string TextoProcurado { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         Medicos = await Repository.GetAllAsync();
+
+        Filtrados = new List<Medico>(Medicos);
     }
 
     public void GoMedicoUpdate(int idMedico)
@@ -52,5 +58,20 @@ public class IndexPage : ComponentBase
         }
     }
 
+    public void FiltrarMedicos()
+    {
+        if (string.IsNullOrWhiteSpace(TextoProcurado))
+        {
+            Filtrados = new List<Medico>(Medicos);
+        }
+        else
+        {
+            Filtrados = Medicos
+                .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                            m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                            m.CRM.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                            m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
+        }
+    }
 }
 

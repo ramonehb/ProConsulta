@@ -11,16 +11,17 @@
         Style="margin-top: 30px;" />
 
 
-<MudDataGrid Items="@Medicos"
-             Filterable="false"
+<MudDataGrid Items="@Filtrados"
+             Filterable="true"
              SortMode="@SortMode.Single"
              Groupable="false"
              Style="margin-top: 10px;"
              Hover="true"
              Bordered="true">
     <ToolBarContent>
-        @* @bind-Value="" *@
-        <MudTextField Placeholder="Search"
+        <MudTextField @bind-Value="TextoProcurado"
+                      TextChanged="@(async e => FiltrarMedicos())"
+                      Placeholder="Search"
                       Adornment="Adornment.Start"
                       Immediate="true"
                       AdornmentIcon="@Icons.Material.Filled.Search"

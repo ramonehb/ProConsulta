@@ -21,9 +21,15 @@ public class IndexPage : ComponentBase
 
     public List<Paciente> Pacientes { get; set; }
 
+    public List<Paciente> Filtrados { get; set; }
+
+    public string TextoProcurado { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         Pacientes = await Repository.GetAllAsync();
+
+        Filtrados = new List<Paciente>(Pacientes);
     }
 
     public void GoPacienteUpdate(int idPaciente)
@@ -49,6 +55,20 @@ public class IndexPage : ComponentBase
         catch (Exception ex)
         {
             Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
+        }
+    }
+    public void FiltrarPacientes()
+    {
+        if (string.IsNullOrWhiteSpace(TextoProcurado))
+        {
+            Filtrados = new List<Paciente>(Pacientes);
+        }
+        else
+        {
+            Filtrados = Pacientes
+                .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                            m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                            m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
         }
     }
 }
