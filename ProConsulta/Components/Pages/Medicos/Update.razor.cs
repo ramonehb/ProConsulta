@@ -8,8 +8,11 @@ using ProConsulta.Repositories.Medicos;
 
 namespace ProConsulta.Components.Pages.Medicos;
 
-public class CreateMedicoPage : ComponentBase
+public class UpdateMedicoPage : ComponentBase
 {
+    [Parameter]
+    public int MedicoId { get; set; }
+
     [Inject]
     public IMedicoRepository repository { get; set; } = null!;
 
@@ -17,12 +20,14 @@ public class CreateMedicoPage : ComponentBase
     public IEspecialidadeRepository EspecialidadeRepository { get; set; } = null!;
 
     [Inject]
-    public ISnackbar Snackbar { get; set; } = null!;
+    public ISnackbar Snackbar { get; set; }
 
     [Inject]
     public NavigationManager Navigation { get; set; } = null!;
 
     public MedicoInputModel MedicoInputModel { get; set; } = new();
+
+    public Medico? MedicoAtual { get; set; }
 
     public List<Especialidade> Especialidades { get; set; } = new();
 
@@ -30,7 +35,20 @@ public class CreateMedicoPage : ComponentBase
     {
         try
         {
+            MedicoAtual = await repository.GetByIdAsync(MedicoId);
             Especialidades = await EspecialidadeRepository.GetAllAsync();
+
+            if (MedicoAtual == null) return;
+
+            MedicoInputModel = new MedicoInputModel
+            {
+                Id = MedicoAtual.Id,
+                Nome = MedicoAtual.Nome,
+                Documento = MedicoAtual.Documento,
+                CRM = MedicoAtual.CRM,
+                Celular = MedicoAtual.Celular,
+                EspecialidadeId = MedicoAtual.EspecialidadeId
+            };
         }
         catch (Exception ex)
         {
@@ -38,11 +56,13 @@ public class CreateMedicoPage : ComponentBase
         }
     }
 
-    public async Task OnValidSubmitAsync(EditContext context)
+    public async Task OnValidSubmitAsync(EditContext form)
     {
         try
         {
-            if (context.Model is MedicoInputModel model)
+            if (MedicoAtual is null) return;
+
+            if (form.Model is MedicoInputModel model)
             {
                 var medicos = await repository.GetAllAsync();
 
@@ -52,17 +72,15 @@ public class CreateMedicoPage : ComponentBase
                     return;
                 }
 
-                await repository.AddAsync(new Medico
-                {
-                    Nome = model.Nome,
-                    Documento = model.Documento.SomenteCarecteres(),
-                    CRM = model.CRM.SomenteCarecteres(),
-                    Celular = model.Celular.SomenteCarecteres(),
-                    DataCadastro = model.DataCadastro,
-                    EspecialidadeId = model.EspecialidadeId
-                });
+                MedicoAtual.Nome = model.Nome;
+                MedicoAtual.Documento = model.Documento.SomenteCarecteres();
+                MedicoAtual.CRM = model.CRM.SomenteCarecteres();
+                MedicoAtual.Celular = model.Celular.SomenteCarecteres();
+                MedicoAtual.EspecialidadeId = model.EspecialidadeId;
 
-                Snackbar.Add("Medico gravado com sucesso.", Severity.Success);
+                await repository.UpdateAsync(MedicoAtual);
+
+                Snackbar.Add($"Médico {MedicoAtual.Nome} atualizado com sucesso.", Severity.Success);
                 Navigation.NavigateTo("/Medicos");
             }
         }

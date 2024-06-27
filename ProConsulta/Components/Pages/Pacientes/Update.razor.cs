@@ -27,21 +27,29 @@ public class UpdatePacientePage : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        PacienteAtual = await repository.GetByIdAsync(PacienteId);
-
-        if (PacienteAtual == null) return;
-
-        PacienteInputModel = new PacienteInputModel
+        try
         {
-            Id = PacienteAtual.Id,
-            Nome = PacienteAtual.Nome,
-            Documento = PacienteAtual.Documento,
-            Celular = PacienteAtual.Celular,
-            Email = PacienteAtual.Email,
-            DataNasicmento = PacienteAtual.DataNasicmento
-        };
+            PacienteAtual = await repository.GetByIdAsync(PacienteId);
 
-        DataNascimento = PacienteAtual.DataNasicmento;
+            if (PacienteAtual == null) return;
+
+            PacienteInputModel = new PacienteInputModel
+            {
+                Id = PacienteAtual.Id,
+                Nome = PacienteAtual.Nome,
+                Documento = PacienteAtual.Documento,
+                Celular = PacienteAtual.Celular,
+                Email = PacienteAtual.Email,
+                DataNasicmento = PacienteAtual.DataNasicmento
+            };
+
+            DataNascimento = PacienteAtual.DataNasicmento;
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
+        }
+        
     }
 
     public async Task OnValidSubmitAsync(EditContext form)
@@ -50,6 +58,14 @@ public class UpdatePacientePage : ComponentBase
         {
             if (form.Model is PacienteInputModel model)
             {
+                var pacientes = await repository.GetAllAsync();
+
+                if (pacientes.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase)))
+                {
+                    Snackbar.Add("Já existe um paciente cadastrado com esse Documento (CPF)", Severity.Info);
+                    return;
+                }
+
                 PacienteAtual.Nome = model.Nome;
                 PacienteAtual.Documento = model.Documento.SomenteCarecteres();
                 PacienteAtual.Celular = model.Celular.SomenteCarecteres();
@@ -58,7 +74,7 @@ public class UpdatePacientePage : ComponentBase
                 
                 await repository.UpdateAsync(PacienteAtual);
 
-                Snackbar.Add($"Pacinete {PacienteAtual.Nome} atualizado com sucesso.", Severity.Success);
+                Snackbar.Add($"Paciente {PacienteAtual.Nome} atualizado com sucesso.", Severity.Success);
                 Navigation.NavigateTo("/Pacientes");
             }
         }

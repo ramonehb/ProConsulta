@@ -1,6 +1,7 @@
 ﻿@page "/Medicos";
 @inherits IndexPage;
 
+<PageTitle>Médicos</PageTitle>
 
 <MudText Typo="Typo.h5">Médicos</MudText>
 
@@ -12,7 +13,7 @@
 
 
 <MudDataGrid Items="@Filtrados"
-             Filterable="true"
+             Filterable="false"
              SortMode="@SortMode.Single"
              Groupable="false"
              Style="margin-top: 10px;"
@@ -34,6 +35,7 @@
         <PropertyColumn Property="p => p.CRM" />
         <PropertyColumn Property="p => p.Celular" />
         <PropertyColumn Property="p => p.DataCadastro" Title="Data de Nascimento" Format="dd/MM/yyyy" />
+        <PropertyColumn Property="p => p.Especialidade.Nome" Title="Especialidade" />
         <TemplateColumn>
             <CellTemplate>
                 <MudStack Row>

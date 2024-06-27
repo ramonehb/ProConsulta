@@ -24,6 +24,6 @@ public class MedicoInputModel
 
     [Display(Name = "Especialidade")]
     [Required(ErrorMessage = "Informe a {0}")]
-    [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Valor selecionado inválido")]
+    [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Selecione a {0}")]
     public int EspecialidadeId { get; set; }
 }

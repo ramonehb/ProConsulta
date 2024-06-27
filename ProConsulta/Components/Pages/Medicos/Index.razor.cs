@@ -34,7 +34,7 @@ public class IndexPage : ComponentBase
 
     public void GoMedicoUpdate(int idMedico)
     {
-        Navigation.NavigateTo($"/Medico/Update/{idMedico}");
+        Navigation.NavigateTo($"/Medicos/Update/{idMedico}");
     }
 
     public async Task DeleteMedico(Medico medico)
@@ -49,7 +49,6 @@ public class IndexPage : ComponentBase
 
                 Snackbar.Add($"Médico excluído com sucesso.", Severity.Success);
                 await OnInitializedAsync();
-
             }
         }
         catch (Exception ex)
@@ -60,18 +59,26 @@ public class IndexPage : ComponentBase
 
     public void FiltrarMedicos()
     {
-        if (string.IsNullOrWhiteSpace(TextoProcurado))
+        try
         {
-            Filtrados = new List<Medico>(Medicos);
+            if (string.IsNullOrWhiteSpace(TextoProcurado))
+            {
+                Filtrados = new List<Medico>(Medicos);
+            }
+            else
+            {
+                Filtrados = Medicos
+                    .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                                m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                                m.CRM.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                                m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Filtrados = Medicos
-                .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
-                            m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
-                            m.CRM.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
-                            m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
+            Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
         }
+
     }
 }
 

@@ -27,9 +27,16 @@ public class IndexPage : ComponentBase
 
     protected override async Task OnInitializedAsync()
     {
-        Pacientes = await Repository.GetAllAsync();
+        try
+        {
+            Pacientes = await Repository.GetAllAsync();
 
-        Filtrados = new List<Paciente>(Pacientes);
+            Filtrados = new List<Paciente>(Pacientes);
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
+        }
     }
 
     public void GoPacienteUpdate(int idPaciente)
@@ -59,16 +66,23 @@ public class IndexPage : ComponentBase
     }
     public void FiltrarPacientes()
     {
-        if (string.IsNullOrWhiteSpace(TextoProcurado))
+        try
         {
-            Filtrados = new List<Paciente>(Pacientes);
+            if (string.IsNullOrWhiteSpace(TextoProcurado))
+            {
+                Filtrados = new List<Paciente>(Pacientes);
+            }
+            else
+            {
+                Filtrados = Pacientes
+                    .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                                m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
+                                m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
+            }
         }
-        else
+        catch (Exception ex)
         {
-            Filtrados = Pacientes
-                .Where(m => m.Nome.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
-                            m.Documento.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase) ||
-                            m.Celular.Contains(TextoProcurado, StringComparison.OrdinalIgnoreCase)).ToList();
+            Snackbar.Add($"Erro contate o administrador: {ex.Message}", Severity.Error);
         }
     }
 }

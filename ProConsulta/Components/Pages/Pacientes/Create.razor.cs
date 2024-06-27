@@ -10,7 +10,7 @@ namespace ProConsulta.Components.Pages.Pacientes;
 public class CreatePacientePage : ComponentBase
 {
     [Inject]
-    public IPacienteRepository Repository { get; set; } = null!;
+    public IPacienteRepository repository { get; set; } = null!;
 
     [Inject]
     public ISnackbar Snackbar { get; set; } = null!;
@@ -28,7 +28,15 @@ public class CreatePacientePage : ComponentBase
         {
             if (editContextPaciente.Model is PacienteInputModel model)
             {
-                await Repository.AddAsync(new Paciente
+                var pacientes = await repository.GetAllAsync();
+
+                if (pacientes.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase)))
+                {
+                    Snackbar.Add("Já existe um paciente cadastrado com esse Documento (CPF)", Severity.Info);
+                    return;
+                }
+
+                await repository.AddAsync(new Paciente
                 {
                     Nome = model.Nome,
                     Documento = model.Documento.SomenteCarecteres(),

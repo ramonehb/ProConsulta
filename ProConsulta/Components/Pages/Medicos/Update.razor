@@ -1,0 +1,65 @@
+﻿@page "/Medicos/Update/{MedicoId:int}";
+
+@inherits UpdateMedicoPage;
+
+
+<MudText Typo="Typo.h5">Atualizar Médico</MudText>
+
+<MudPaper Class="pa-8 mt-4">
+    <EditForm Model="@MedicoInputModel" OnValidSubmit="OnValidSubmitAsync">
+        <DataAnnotationsValidator />
+
+        <MudTextField Label="Nome*"
+                      @bind-Value="MedicoInputModel.Nome"
+                      For="@(() => MedicoInputModel.Nome)"
+                      Variant="Variant.Outlined" />
+
+        <MudTextField Label="Documento*"
+                      @bind-Value="MedicoInputModel.Documento"
+                      For="@(() => MedicoInputModel.Documento)"
+                      Mask="@(new PatternMask("000.000.000-00"))"
+                      Variant="Variant.Outlined" />
+
+        <MudTextField Label="CRM*"
+                      @bind-Value="MedicoInputModel.CRM"
+                      For="@(() => MedicoInputModel.CRM)"
+                      Mask="@(new PatternMask("aa-000000"))"
+                      Variant="Variant.Outlined" />
+
+        <MudTextField Label="Celular*"
+                      @bind-Value="MedicoInputModel.Celular"
+                      For="@(() => MedicoInputModel.Celular)"
+                      Mask="@(new PatternMask("(00) 0 0000-0000"))"
+                      Variant="Variant.Outlined" />
+
+        <MudSelect Label="Especilidade*"
+                   Text=""
+                   Variant="Variant.Outlined"
+                   @bind-Value="MedicoInputModel.EspecialidadeId"
+                   AnchorOrigin="Origin.BottomCenter"
+                   For="@(() => MedicoInputModel.EspecialidadeId)">
+            @foreach (var especialidade in Especialidades)
+            {
+                <MudSelectItem Value="@especialidade.Id">@especialidade.Nome</MudSelectItem>
+            }
+        </MudSelect>
+
+        <MudDivider Class="m-4" />
+
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.Save"
+                   Color="Color.Info"
+                   Size="Size.Large"
+                   ButtonType="ButtonType.Submit">
+            Atualizar
+        </MudButton>
+        <MudButton Variant="Variant.Filled"
+                   StartIcon="@Icons.Material.Filled.BackHand"
+                   Color="Color.Error"
+                   Size="Size.Large"
+                   ButtonType="ButtonType.Button"
+                   Href="/Medicos">
+            Voltar
+        </MudButton>
+    </EditForm>
+</MudPaper>
