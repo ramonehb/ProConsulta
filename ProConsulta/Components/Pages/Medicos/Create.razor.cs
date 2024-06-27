@@ -48,7 +48,7 @@ public class CreateMedicoPage : ComponentBase
 
                 if (medicos.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase)))
                 {
-                    Snackbar.Add("Já existe um médico cadastrado com esse Documento (CPF)", Severity.Info);
+                    Snackbar.Add("Já existe um médico(a) cadastrado com esse Documento (CPF)", Severity.Info);
                     return;
                 }
 
@@ -62,7 +62,7 @@ public class CreateMedicoPage : ComponentBase
                     EspecialidadeId = model.EspecialidadeId
                 });
 
-                Snackbar.Add("Medico gravado com sucesso.", Severity.Success);
+                Snackbar.Add("Médico(a) gravado com sucesso.", Severity.Success);
                 Navigation.NavigateTo("/Medicos");
             }
         }

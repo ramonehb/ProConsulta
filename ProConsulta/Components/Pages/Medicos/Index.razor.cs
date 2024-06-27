@@ -41,13 +41,13 @@ public class IndexPage : ComponentBase
     {
         try
         {
-            var resultado = await Dialog.ShowMessageBox("Atenção", $"Deseja excluir o médico {medico.Nome}?", yesText: "SIM", cancelText: "NÃO") ?? false;
+            var resultado = await Dialog.ShowMessageBox("Atenção", $"Deseja excluir o médico(a) {medico.Nome}?", yesText: "SIM", cancelText: "NÃO") ?? false;
 
             if (resultado)
             {
                 await Repository.DeleteAsync(medico.Id);
 
-                Snackbar.Add($"Médico excluído com sucesso.", Severity.Success);
+                Snackbar.Add($"Médico(a) excluído com sucesso.", Severity.Success);
                 await OnInitializedAsync();
             }
         }

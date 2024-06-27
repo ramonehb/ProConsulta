@@ -68,7 +68,7 @@ public class UpdateMedicoPage : ComponentBase
 
                 if (medicos.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase)))
                 {
-                    Snackbar.Add("Já existe um médico cadastrado com esse Documento (CPF)", Severity.Info);
+                    Snackbar.Add("Já existe um médico(a) cadastrado com esse Documento (CPF)", Severity.Info);
                     return;
                 }
 
@@ -80,7 +80,7 @@ public class UpdateMedicoPage : ComponentBase
 
                 await repository.UpdateAsync(MedicoAtual);
 
-                Snackbar.Add($"Médico {MedicoAtual.Nome} atualizado com sucesso.", Severity.Success);
+                Snackbar.Add($"Médico(a) {MedicoAtual.Nome} atualizado com sucesso.", Severity.Success);
                 Navigation.NavigateTo("/Medicos");
             }
         }
