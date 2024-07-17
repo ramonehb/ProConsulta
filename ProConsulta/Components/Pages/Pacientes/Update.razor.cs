@@ -60,7 +60,7 @@ public class UpdatePacientePage : ComponentBase
             {
                 var pacientes = await repository.GetAllAsync();
 
-                if (pacientes.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase)))
+                if (pacientes.Any(m => m.Documento.Contains(model.Documento.SomenteCarecteres(), StringComparison.OrdinalIgnoreCase) && m.Id != model.Id))
                 {
                     Snackbar.Add("Já existe um paciente cadastrado com esse Documento (CPF)", Severity.Info);
                     return;
