@@ -31,7 +31,7 @@ public class CreateAgendamentoPage : ComponentBase
     public List<Paciente> Pacientes { get; set; } = new List<Paciente>();
 
     public TimeSpan? time = new TimeSpan(09, 00, 00);
-    public DateTime? date {  get; set; } = DateTime.Now;
+    public DateTime? date {  get; set; } = DateTime.Now.Date;
 
     protected override async Task OnInitializedAsync()
     {
