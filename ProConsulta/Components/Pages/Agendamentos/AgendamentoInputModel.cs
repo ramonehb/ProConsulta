@@ -9,19 +9,13 @@ namespace ProConsulta.Components.Pages.Agendamentos
         public string? Observacao { get; set; }
 
         [Required(ErrorMessage = "Informe o {0}")]
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Valor selecionado é inválido")]
+        [Display(Name = "Paciente")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Selecione o {0}")]
         public int PacienteId { get; set; }
 
         [Required(ErrorMessage = "Informe o {0}")]
-        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Valor selecionado é inválido")]
+        [Display(Name = "Médico")]
+        [RegularExpression("([1-9][0-9]*)", ErrorMessage = "Selecione o {0}")]
         public int MedicoId { get; set; }
-
-        [Required(ErrorMessage = "Informe a {0}")]
-        [Display(Name = "Hora da Consulta")]
-        public TimeSpan HoraConsulta { get; set; }
-
-        [Required(ErrorMessage = "Informe a {0}")]
-        [Display(Name = "Data da Consulta")]
-        public DateTime DataConsulta { get; set; }
     }
 }

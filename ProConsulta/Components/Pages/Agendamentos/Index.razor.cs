@@ -30,7 +30,7 @@ public class IndexAgendamentoPage : ComponentBase
     {
         try
         {
-            var resultado = await Dialog.ShowMessageBox("Atenção", $"Deseja excluir o agendamento {agendamento.Observacao}?", yesText: "SIM", cancelText: "NÃO") ?? false;
+            var resultado = await Dialog.ShowMessageBox("Atenção", $"Deseja excluir o agendamento do paciente: {agendamento.Paciente.Nome}, observação: {agendamento.Observacao ?? "Sem observação"}?", yesText: "SIM", cancelText: "NÃO") ?? false;
 
             if (resultado)
             {

@@ -7,7 +7,7 @@
     <EditForm Model="@AgendamentoInputModel" OnValidSubmit="OnValidSubmitAsync">
         <DataAnnotationsValidator/>
 
-        <MudTextField Label="Observação*"
+        <MudTextField Label="Observação"
                       @bind-Value="AgendamentoInputModel.Observacao"
                       For="@(() => AgendamentoInputModel.Observacao)"
                       Variant="Variant.Outlined"/>
@@ -37,13 +37,13 @@
         </MudSelect>
 
         <MudDatePicker Label="Data do agendamento"
-                       @bind-Value="date"
+                       @bind-Date="date"
                        Variant="Variant.Outlined"
                        MinDate="DateTime.Now.Date"
                        DateFormat="dd/MM/yyyy"/>
 
         <MudTimePicker Label="Hora do agendamento"
-                       @bind-Value="time"
+                       @bind-Time="time"
                        Variant="Variant.Outlined"
                        AmPm="false"/>
 
