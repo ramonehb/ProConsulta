@@ -49,14 +49,16 @@
                     <CellTemplate>
                         <MudStack Row>
                             <MudFab Label="Editar" 
-                                    Size="Size.Small" 
-                                    @onclick="@(() => GoPacienteUpdate(context.Item.Id))" 
+                                    Size="Size.Small"
+                                    hidden="@HideButtons"
+                            @onclick="@(() => GoPacienteUpdate(context.Item.Id))" 
                                     StartIcon="@Icons.Material.Filled.Edit"
                                     Color="Color.Success"/>
 
                             <MudFab Label="Excluir"
                                     Size="Size.Small"
-                                    @onclick="@(() => DeletePaciente(context.Item))"
+                                    hidden="@HideButtons"
+                            @onclick="@(() => DeletePaciente(context.Item))"
                                     StartIcon="@Icons.Material.Filled.Delete"
                                     Color="Color.Error" />
                         </MudStack>

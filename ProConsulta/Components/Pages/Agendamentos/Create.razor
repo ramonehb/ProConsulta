@@ -1,5 +1,10 @@
 ﻿@page "/Agendamentos/Create";
+@using Microsoft.AspNetCore.Authorization
 @inherits CreateAgendamentoPage;
+
+@attribute [Authorize(Roles = "Atendente")]
+
+<PageTitle>Criar Agendamento</PageTitle>
 
 <MudText Typo="Typo.h5">Cadastro de Agendamentos</MudText>
 

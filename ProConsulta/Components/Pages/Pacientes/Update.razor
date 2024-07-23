@@ -1,6 +1,11 @@
 ﻿@page "/Pacientes/Update/{PacienteId:int}";
+@using Microsoft.AspNetCore.Authorization
 
 @inherits UpdatePacientePage;
+
+@attribute [Authorize(Roles = "Atendente")]
+
+<PageTitle>Atualizar Paciente</PageTitle>
 
 <MudText Typo="Typo.h5">Atualizar Paciente</MudText>
 

@@ -1,8 +1,13 @@
 ﻿@page "/Medicos/Create";
+@using Microsoft.AspNetCore.Authorization
 
 @inherits CreateMedicoPage;
 
-<MudText Typo="Typo.h5">Cadastro de Médicos</MudText>
+@attribute [Authorize(Roles = "Atendente")]
+
+<PageTitle>Cadastro de Médico</PageTitle>
+
+<MudText Typo="Typo.h5">Cadastro de Médico</MudText>
 
 <MudPaper Class="pa-8 mt-4">
     <EditForm Model="@MedicoInputModel" OnValidSubmit="OnValidSubmitAsync">

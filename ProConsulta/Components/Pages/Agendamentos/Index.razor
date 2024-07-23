@@ -1,6 +1,7 @@
 ﻿@page "/Agendamentos";
 @inherits IndexAgendamentoPage;
 
+<PageTitle>Agendamentos</PageTitle>
 <MudText Typo="Typo.h5">Agendamentos</MudText>
 
 <MudFab Color="Color.Info"
@@ -30,6 +31,7 @@
             <MudStack Row Class="d-flex justify-content-between mt-4 mb-2">
                 <MudChip Color="Color.Primary">@agendamento.DataConsulta.ToString("dd/MM/yyyy") as @agendamento.HoraConsulta</MudChip>
                 <MudFab Size="Size.Small"
+                        hidden="@HideButtons"
                         @onclick="@(() => DeleteAgendamento(agendamento))"
                         StartIcon="@Icons.Material.Filled.Delete"
                         Color="Color.Error" />

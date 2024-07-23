@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using MudBlazor;
 using ProConsulta.Models;
 using ProConsulta.Repositories.Medicos;
@@ -25,8 +26,17 @@ public class IndexPage : ComponentBase
     
     public string TextoProcurado { get; set; }
 
+    public bool HideButtons { get; set; }
+
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationState { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
+        var session = await AuthenticationState;
+
+        HideButtons = !session.User.IsInRole("Atendente");
+
         Medicos = await Repository.GetAllAsync();
 
         Filtrados = new List<Medico>(Medicos);
