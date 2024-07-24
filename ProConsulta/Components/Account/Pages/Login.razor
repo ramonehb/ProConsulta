@@ -19,7 +19,6 @@
             <DataAnnotationsValidator />
             <h2>Seja bem-vindo(a)</h2>
             <hr />
-            <ValidationSummary class="text-danger" role="alert" />
             <div class="form-floating mb-3">
                 <InputText @bind-Value="Input.Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
                 <label for="email" class="form-label">E-mail</label>
@@ -37,7 +36,7 @@
                 </label>
             </div>
             <div>
-                <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                <button type="submit" class="w-100 btn btn-outline-primary">Entrar</button>
             </div>
             <div>
                 <p>
@@ -97,11 +96,11 @@
 
     private sealed class InputModel
     {
-        [Required]
+        [Required(ErrorMessage = "E-mail obrigatório")]
         [EmailAddress]
         public string Email { get; set; } = "";
 
-        [Required]
+        [Required(ErrorMessage = "Senha obrigatória")]
         [DataType(DataType.Password)]
         public string Password { get; set; } = "";
 

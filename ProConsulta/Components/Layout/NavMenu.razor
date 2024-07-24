@@ -1,9 +1,15 @@
-﻿<MudNavMenu>
-    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Home</MudNavLink>
+﻿<style>
+	.mud-navmenu.mud-navmenu-default .mud-nav-link.active:not(.mud-nav-link-disabled){
+		color: #0C80DF !important;
+	}
+</style>
+
+<MudNavMenu>
+    <MudNavLink Href="" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Home">Inicio</MudNavLink>
 	<MudNavLink Href="agendamentos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Schedule">Agendamentos</MudNavLink>
-	<MudNavLink Href="pacientes" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Pacientes</MudNavLink>
-	<MudNavLink Href="medicos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Médicos</MudNavLink>
-	<AuthorizeView>
+	<MudNavLink Href="pacientes" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.Create">Pacientes</MudNavLink>
+	<MudNavLink Href="medicos" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.CreateNewFolder">Médicos</MudNavLink>
+	@* <AuthorizeView>
 		<Authorized>
 			<MudNavLink Href="Account/Manage" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">@context.User.Identity?.Name</MudNavLink>
 		</Authorized>
@@ -11,6 +17,6 @@
 			<MudNavLink Href="Account/Register" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Criar Usúario</MudNavLink>
 			<MudNavLink Href="Account/Login" Match="NavLinkMatch.Prefix" Icon="@Icons.Material.Filled.List">Login</MudNavLink>
 		</NotAuthorized>
-	</AuthorizeView>
+	</AuthorizeView> *@
 
 </MudNavMenu>

@@ -29,7 +29,7 @@
             <MudDivider Class="mt-4 mb-4" />
 
             <MudStack Row Class="d-flex justify-content-between mt-4 mb-2">
-                <MudChip Color="Color.Primary">@agendamento.DataConsulta.ToString("dd/MM/yyyy") as @agendamento.HoraConsulta</MudChip>
+                <MudChip Color="Color.Info">@agendamento.DataConsulta.ToString("dd/MM/yyyy") as @agendamento.HoraConsulta</MudChip>
                 <MudFab Size="Size.Small"
                         hidden="@HideButtons"
                         @onclick="@(() => DeleteAgendamento(agendamento))"
