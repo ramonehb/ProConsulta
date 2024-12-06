@@ -9,6 +9,7 @@ using ProConsulta.Repositories.Agendamentos;
 using ProConsulta.Repositories.Especialidades;
 using ProConsulta.Repositories.Medicos;
 using ProConsulta.Repositories.Pacientes;
+using ProConsulta.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,8 @@ builder.Services.AddScoped<IMedicoRepository, MedicoRepository>();
 builder.Services.AddScoped <IPacienteRepository, PacienteRepository>();
 builder.Services.AddScoped<IEspecialidadeRepository, EspecialidadeReposity>();
 builder.Services.AddScoped<IAgendamentoRepository, AgendamentoRepository>();
+
+builder.Services.AddScoped<IBusService, RabbitMQClientService>();   
 
 builder.Services.AddAuthentication(options =>
     {

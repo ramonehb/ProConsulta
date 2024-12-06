@@ -1,15 +1,21 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProConsulta.Data;
 using ProConsulta.Models;
+using ProConsulta.Service;
 
 namespace ProConsulta.Repositories.Agendamentos;
 
 public class AgendamentoRepository : IAgendamentoRepository
 {
     private readonly ApplicationDbContext _context;
-    public AgendamentoRepository(ApplicationDbContext context)
+    private readonly IBusService _busService;
+
+	const string routingKeyAgendamento = "agendamento-created";
+
+    public AgendamentoRepository(ApplicationDbContext context, IBusService busService)
     {
         _context = context;
+        _busService = busService;
     }
 
     public async Task AddAsync(Agendamento agendamento)
@@ -20,8 +26,10 @@ public class AgendamentoRepository : IAgendamentoRepository
 				.Add(agendamento);
 
 			await _context.SaveChangesAsync();
-		}
-		catch (Exception)
+
+			_busService.Publish(routingKeyAgendamento, agendamento);
+        }
+        catch (Exception)
 		{
 			_context.ChangeTracker.Clear();
 			throw;
